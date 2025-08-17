@@ -95,13 +95,10 @@ export function ProfileEditDialog({ profile, open, onOpenChange }: ProfileEditDi
       onOpenChange(false);
     } catch (err) {
       console.error('Error updating profile:', err);
-    } catch (error) {
       toast({
         title: "Error",
         description: err instanceof Error ? err.message : "Failed to update profile",
         variant: "destructive",
-        title: "Error",
-        description: "Failed to update profile",
       });
     } finally {
       setIsLoading(false);

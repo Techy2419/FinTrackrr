@@ -40,17 +40,14 @@ export function UserInfoDialog({ open, onOpenChange, userId, onComplete }: UserI
         lastName: lastName.trim(),
         updatedAt: new Date(),
       });
-      
       toast({
         title: "Success",
         description: "Your information has been updated",
       });
-      
       await onComplete();
       onOpenChange(false);
     } catch (err) {
       console.error('Error updating user info:', err);
-    } catch (error) {
       toast({
         title: "Error",
         description: "Failed to update your information",

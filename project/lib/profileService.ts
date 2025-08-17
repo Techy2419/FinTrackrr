@@ -43,8 +43,6 @@ export async function getProfiles(userId: string): Promise<Profile[]> {
     })) as Profile[];
   } catch (err) {
     console.error('Error getting profiles:', err);
-    throw err;
-  } catch (error) {
     throw new Error('Failed to fetch profiles');
   }
 }
@@ -69,8 +67,6 @@ export async function deleteProfile(profileId: string) {
     await deleteDoc(profileRef);
   } catch (err) {
     console.error('Error deleting profile:', err);
-    throw err;
-  } catch (error) {
     throw new Error('Failed to delete profile');
   }
 }
