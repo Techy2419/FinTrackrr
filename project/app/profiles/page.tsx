@@ -9,9 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ProfileWizard } from '@/components/profile-wizard';
 import { ProfileEditDialog } from '@/components/profile-edit-dialog';
-import { Loader2, Plus, User2, LogOut } from 'lucide-react';
+import { Loader2, Plus, User2, LogOut, Sun, Moon, Laptop, Settings } from 'lucide-react';
 import { UserInfoDialog } from '@/components/user-info-dialog';
-import { Loader2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import {
@@ -20,12 +19,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel
 } from "@/components/ui/dropdown-menu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sun, Moon, Laptop } from 'lucide-react';
-import { User2, LogOut, Settings, Plus } from 'lucide-react';
 
 export default function ProfilesPage() {
   const { user, signOutUser } = useAuth();
