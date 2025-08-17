@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { Expense, CreateExpenseInput } from '@/types';
 import { useProfile } from './ProfileContext';
 import { createExpense, getExpenses, updateExpense, deleteExpense } from '@/lib/expenseService';
+import { Timestamp } from 'firebase/firestore';
 
 interface ExpenseContextType {
   expenses: Expense[];
@@ -31,7 +32,7 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
       try {
         setIsLoading(true);
         const fetchedExpenses = await getExpenses(activeProfile?.id || '');
-        setExpenses(fetchedExpenses);
+        setExpenses(fetchedExpenses as Expense[]);
       } catch (error) {
         console.error('Error loading expenses:', error);
       } finally {
@@ -51,8 +52,9 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
         id: expenseId,
         ...data,
         profileId: activeProfile?.id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
+        date: Timestamp.fromDate(data.date),
       };
       setExpenses(prev => [newExpense, ...prev]);
     } catch (error) {
@@ -63,11 +65,14 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
 
   const handleUpdateExpense = async (id: string, data: Partial<Expense>) => {
     try {
-      await updateExpense(id, data);
+      await updateExpense(id, {
+        ...data,
+        date: data.date instanceof Timestamp ? data.date.toDate() : data.date,
+      });
       setExpenses(prev =>
         prev.map(expense =>
           expense.id === id
-            ? { ...expense, ...data, updatedAt: Timestamp.fromDate(new Date()) }
+            ? { ...expense, ...data, updatedAt: Timestamp.now() }
             : expense
         )
       );

@@ -3,25 +3,30 @@
 import { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getPaymentMethodStats, PaymentMethodStats } from '@/lib/expenseService';
-import { Expense } from '@/lib/expenseService';
+import { getPaymentMethodStats } from '@/lib/expenseService';
+import { Expense, PaymentMethodStats, PaymentMethod } from '@/types';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
 
 interface PaymentMethodsChartProps {
   expenses: Expense[];
+  profileId: string;
 }
 
-export function PaymentMethodsChart({ expenses }: PaymentMethodsChartProps) {
+export function PaymentMethodsChart({ expenses, profileId }: PaymentMethodsChartProps) {
   const [stats, setStats] = useState<PaymentMethodStats[]>([]);
 
   useEffect(() => {
     const loadStats = async () => {
-      const stats = await getPaymentMethodStats(expenses);
-      setStats(stats);
+      if (!profileId) return;
+      const stats = await getPaymentMethodStats(profileId);
+      setStats(stats.map(stat => ({
+        ...stat,
+        method: stat.method as PaymentMethod
+      })));
     };
     loadStats();
-  }, [expenses]);
+  }, [profileId]);
 
   if (stats.length === 0) {
     return (

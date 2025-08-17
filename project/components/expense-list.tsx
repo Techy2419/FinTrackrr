@@ -93,7 +93,7 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                 <Button
                   variant="destructive"
                   size="sm"
-                  onClick={() => handleDelete(expense.id)}
+                  onClick={() => handleDelete(expense.id!)}
                 >
                   Delete
                 </Button>

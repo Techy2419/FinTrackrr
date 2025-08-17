@@ -87,7 +87,7 @@ export default function ExpensesPage() {
             <CardTitle>Payment Methods</CardTitle>
           </CardHeader>
           <CardContent>
-            <PaymentMethodsChart expenses={expenses} />
+            <PaymentMethodsChart expenses={expenses} profileId={activeProfile?.id || ''} />
           </CardContent>
         </Card>
 

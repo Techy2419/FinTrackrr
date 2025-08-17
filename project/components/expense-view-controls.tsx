@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Expense } from '@/lib/expenseService';
+import { Expense } from '@/types';
 import { format } from 'date-fns';
 import { Edit, Trash2 } from 'lucide-react';
 import { useExpense } from '@/contexts/ExpenseContext';
@@ -33,14 +33,14 @@ export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps)
   const [sortField, setSortField] = useState<string>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
-  const { removeExpense } = useExpense();
+  const { deleteExpense } = useExpense();
 
   // Filter expenses based on search term
   const filteredExpenses = expenses.filter(expense => {
     if (!expense) return false;
     
     const searchLower = searchTerm.toLowerCase();
-    const description = expense.memo?.toLowerCase() || '';
+    const description = expense.description?.toLowerCase() || '';
     const paymentMethod = expense.paymentMethod?.toLowerCase() || '';
     const amount = expense.amount?.toString() || '';
 
@@ -136,7 +136,7 @@ export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps)
               sortedExpenses.map((expense) => (
                 <TableRow key={expense.id}>
                   <TableCell>{formatDate(expense.date)}</TableCell>
-                  <TableCell>{expense.memo || '-'}</TableCell>
+                  <TableCell>{expense.description || '-'}</TableCell>
                   <TableCell>{expense.amount.toFixed(2)}</TableCell>
                   <TableCell>{expense.paymentMethod}</TableCell>
                   <TableCell>
@@ -166,7 +166,7 @@ export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps)
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              onClick={() => expense.id ? removeExpense(expense.id) : null}
+                              onClick={() => expense.id ? deleteExpense(expense.id) : null}
                               disabled={!expense.id}
                             >
                               Delete

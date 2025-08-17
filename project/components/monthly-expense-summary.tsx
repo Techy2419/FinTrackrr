@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { compareMonthlyExpenses, MonthlyComparison } from '@/lib/expenseService';
+import { compareMonthlyExpenses } from '@/lib/expenseService';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { format } from 'date-fns';
 import { TrendingDown, TrendingUp } from 'lucide-react';
@@ -10,6 +10,14 @@ import { TrendingDown, TrendingUp } from 'lucide-react';
 interface MonthlyExpenseSummaryProps {
   profileId: string;
 }
+
+// Define the type locally if needed:
+type MonthlyComparison = {
+  currentMonthTotal: number;
+  previousMonthTotal: number;
+  difference: number;
+  hasSaved: boolean;
+};
 
 export function MonthlyExpenseSummary({ profileId }: MonthlyExpenseSummaryProps) {
   const [comparison, setComparison] = useState<MonthlyComparison | null>(null);

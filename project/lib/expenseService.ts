@@ -7,24 +7,14 @@ import {
   getDocs,
   query,
   where,
+  orderBy,
   Timestamp,
   serverTimestamp,
   Query,
   DocumentData
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { Expense as ExpenseType, CreateExpenseInput, UpdateExpenseInput, PaymentMethod } from '@/types';
-
-export interface Expense {
-  id?: string;
-  profileId: string;
-  amount: number;
-  memo?: string;
-  date: Timestamp;
-  paymentMethod: PaymentMethod;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
-}
+import { Expense, CreateExpenseInput, UpdateExpenseInput, PaymentMethod } from '@/types';
 
 export type SortField = 'date' | 'amount';
 export type SortOrder = 'asc' | 'desc';
@@ -91,11 +81,9 @@ export async function updateExpense(expenseId: string, updates: UpdateExpenseInp
     const expenseRef = doc(db, EXPENSES_COLLECTION, expenseId);
     const updateData = {
       ...updates,
-      updatedAt: new Date(),
+      updatedAt: Timestamp.now(),
       date: updates.date ? Timestamp.fromDate(updates.date) : undefined,
-      updatedAt: Timestamp.now()
     };
-
     await updateDoc(expenseRef, updateData);
   } catch (error) {
     console.error('Error updating expense:', error);

@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { createProfile, getProfiles, updateProfile, deleteProfile } from '@/lib/profileService';
 import { Profile, CreateProfileInput, UpdateProfileInput, ProfileContextType } from '@/types';
 import { useToast } from '@/components/ui/use-toast';
+import { FirebaseError } from 'firebase/app';
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
@@ -31,6 +32,8 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       setError('Failed to load profiles. Please try again.');
       if (error instanceof FirebaseError) {
         console.error('Firebase error:', error.code, error.message);
+      } else if (error instanceof Error) {
+        console.error('Error loading profiles:', error.message);
       }
       const errorMessage = error instanceof Error ? error.message : 'Failed to load profiles';
       setError(errorMessage);

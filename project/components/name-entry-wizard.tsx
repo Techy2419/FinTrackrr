@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 interface NameEntryWizardProps {
   open: boolean;
