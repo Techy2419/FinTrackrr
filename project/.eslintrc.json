@@ -1,0 +1,35 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "globals": {
+    "React": "readonly",
+    "HTMLElement": "readonly",
+    "HTMLDivElement": "readonly",
+    "HTMLButtonElement": "readonly",
+    "HTMLInputElement": "readonly",
+    "HTMLTextAreaElement": "readonly",
+    "HTMLSpanElement": "readonly",
+    "HTMLParagraphElement": "readonly",
+    "HTMLHeadingElement": "readonly",
+    "HTMLTableElement": "readonly",
+    "HTMLTableSectionElement": "readonly",
+    "HTMLTableRowElement": "readonly",
+    "HTMLTableCellElement": "readonly",
+    "HTMLTableCaptionElement": "readonly",
+    "HTMLUListElement": "readonly",
+    "HTMLLIElement": "readonly",
+    "HTMLOListElement": "readonly",
+    "HTMLAnchorElement": "readonly",
+    "console": "readonly",
+    "process": "readonly",
+    "setTimeout": "readonly",
+    "require": "readonly"
+  },
+  "ignorePatterns": [".next/*", "node_modules/*"]
+}
